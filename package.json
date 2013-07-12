@@ -1,0 +1,51 @@
+{
+  "name": "ninja-build-gen",
+  "version": "0.1.0",
+  "description": "Programmatically create Ninja build-system files.",
+  "keywords": [
+    "ninja",
+    "build",
+    "system",
+    "builder",
+    "generate",
+    "build.ninja"
+  ],
+  "homepage": "https://github.com/benbria/ninja-build-gen",
+  "bugs": "https://github.com/benbria/ninja-build-gen/issues",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://raw.github.com/benbria/ninja-build-gen/master/LICENSE"
+    }
+  ],
+  "author": {
+    "name": "Jean Lauliac",
+    "email": "jean@lauliac.com"
+  },
+  "files": "lib",
+  "main": "lib/ninja-build-gen.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/benbria/ninja-build-gen.git"
+  },
+  "scripts": {
+    "prepublish": "grunt"
+  },
+  "dependencies": {
+    "source-map-support": "~0.1.8"
+  },
+  "devDependencies": {
+    "coffeelint": "~0.5.6",
+    "grunt": "~0.4.1",
+    "grunt-contrib-coffee": "~0.7.0",
+    "matchdep": "~0.1.1",
+    "grunt-coffeelint": "0.0.7",
+    "mocha": "~1.12.0",
+    "grunt-mocha": "~0.3.4",
+    "coffee-script": "~1.6.3",
+    "grunt-mocha-test": "~0.5.0"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  }
+}
