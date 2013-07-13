@@ -1,0 +1,9 @@
+/test/
+/node_modules/
+/source/
+/.coffeelint
+/.editorconfig
+/.npmignore
+/Gruntfile.coffee
+/LICENSE
+/README.md
