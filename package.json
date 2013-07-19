@@ -1,6 +1,6 @@
 {
   "name": "ninja-build-gen",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Programmatically create Ninja build-system files.",
   "keywords": [
     "ninja",
@@ -22,7 +22,7 @@
     "name": "Jean Lauliac",
     "email": "jean@lauliac.com"
   },
-  "files": "lib",
+  "files": ["lib"],
   "main": "lib/ninja-build-gen.js",
   "repository": {
     "type": "git",
