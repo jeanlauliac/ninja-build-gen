@@ -164,7 +164,8 @@ class NinjaBuilder
     save: (path, callback) ->
         file = fs.createWriteStream(path)
         @saveToStream file
-        file.on 'close', -> callback()
+        if callback
+            file.on 'close', -> callback()
         file.end()
 
 module.exports = (version, builddir) ->
