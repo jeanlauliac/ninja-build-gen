@@ -10,12 +10,12 @@
     "generate",
     "build.ninja"
   ],
-  "homepage": "https://github.com/benbria/ninja-build-gen",
-  "bugs": "https://github.com/benbria/ninja-build-gen/issues",
+  "homepage": "https://github.com/undashes/ninja-build-gen",
+  "bugs": "https://github.com/undashes/ninja-build-gen/issues",
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://raw.github.com/benbria/ninja-build-gen/master/LICENSE"
+      "url": "https://raw.github.com/undashes/ninja-build-gen/master/LICENSE"
     }
   ],
   "author": {
@@ -26,7 +26,7 @@
   "main": "lib/ninja-build-gen.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/benbria/ninja-build-gen.git"
+    "url": "git://github.com/undashes/ninja-build-gen.git"
   },
   "scripts": {
     "prepublish": "grunt"
