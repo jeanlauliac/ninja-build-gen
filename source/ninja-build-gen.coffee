@@ -5,9 +5,10 @@
 'use strict'
 require('source-map-support').install()
 fs          = require 'fs'
+ld          = require 'lodash'
 
 # Represent a Ninja variable assignation (it's more a binding, actually).
-class NinjaAssignBuilder
+class NinjaAssign
     constructor: (@name, @value) ->
 
     # Write the assignation into a `stream`.
@@ -15,14 +16,15 @@ class NinjaAssignBuilder
         stream.write "#{@name} = #{@value}\n"
 
 # Represent a Ninja edge, that is, "how to construct this file X from Y".
-class NinjaEdgeBuilder
+class NinjaEdge
     # Construct an edge specifing the resulting files, as `targets`, of the
     # edge.
-    constructor: (@targets) ->
+    constructor: (@targets = [], @rule = 'phony', \
+                  @sources = [], @dependencies = []) ->
         @assigns = []
-        @rule = 'phony'
-        if typeof @targets == 'string'
-            @targets = [@targets]
+        @targets = [@targets] if typeof @targets == 'string'
+        @sources = [@sources] if typeof @sources == 'string'
+        @dependencies = [@dependencies] if typeof @dependencies == 'string'
 
     # Define the Ninja `rule` name to use to build this edge.
     using: (rule) ->
@@ -32,34 +34,22 @@ class NinjaEdgeBuilder
     # Define one or several direct `sources`, that is, files to be transformed
     # by the rule.
     from: (sources) ->
-        if typeof sources == 'string'
-            sources = [sources]
-        unless @sources?
-            @sources = sources
-        else
-            @sources = @sources.concat sources
+        sources = [sources] if typeof sources == 'string'
+        @sources = @sources.concat sources
         this
 
     # Define one or several indirect `dependencies`, that is, files needed but
     # not part of the compilation or transformation.
     need: (dependencies) ->
-        if typeof dependencies == 'string'
-            dependencies = [dependencies]
-        unless @dependencies?
-            @dependencies = dependencies
-        else
-            @dependencies = @dependencies.concat dependencies
+        dependencies = [dependencies] if typeof dependencies == 'string'
+        @dependencies = @dependencies.concat dependencies
         this
 
     # Define one or several order-only dependencies in `orderDeps`, that is,
     # this edge should be build after those dependencies are.
     after: (orderDeps) ->
-        if typeof orderDeps == 'string'
-            orderDeps = [orderDeps]
-        unless @orderDeps?
-            @orderDeps = orderDeps
-        else
-            @orderDeps = @orderDeps.concat orderDeps
+        orderDeps = [orderDeps] if typeof orderDeps == 'string'
+        @orderDeps = @orderDeps.concat orderDeps
         this
 
     # Bind a variable to a temporary value for the edge.
@@ -70,9 +60,9 @@ class NinjaEdgeBuilder
     write: (stream) ->
         stream.write "build #{@targets.join(' ')}: #{@rule}"
         stream.write ' ' + @sources.join(' ') if @sources?
-        if @dependencies?
+        if @dependencies.length > 0
             stream.write ' | ' + @dependencies.join ' '
-        if @orderDeps?
+        if @orderDeps.length > 0
             stream.write ' || ' + @orderDeps.join ' '
         for name, value of @assigns
             stream.write "\n  #{name} = #{value}"
@@ -80,9 +70,9 @@ class NinjaEdgeBuilder
 
 # Represent a Ninja rule, that is, a method to "how I build a file of type A
 # to type B".
-class NinjaRuleBuilder
+class NinjaRule
     # Create a rule with this `name`.
-    constructor: (@name) ->
+    constructor: (@name, @command, @desc) ->
         @command = ''
 
     # Specify the command-line to run to execute the rule.
@@ -109,9 +99,8 @@ class NinjaRuleBuilder
             stream.write "  depfile = #{@dependencyFile}\n"
             stream.write "  deps = gcc\n"
 
-# Provide helpers to build a Ninja file by specifing high-level rules and
-# targets.
-class NinjaBuilder
+# Represent a Ninja build file.
+class NinjaFile
     # Create the builder, specifing an optional required Ninja `version`, and a
     # build directory (where Ninja put logs and where you can put
     # intermediary products).
@@ -136,19 +125,12 @@ class NinjaBuilder
         @clauses.push clause
         clause
 
-    # Add a rule and return it.
-    rule: (name) ->
-        clause = new NinjaRuleBuilder(name)
-        @clauses.push clause
-        @ruleCount++
-        clause
-
-    # Add an edge and return it.
-    edge: (targets) ->
-        clause = new NinjaEdgeBuilder(targets)
-        @clauses.push clause
-        @edgeCount++
-        clause
+    # Add one or more edge(s) or rule(s). You can pass just a clause, of
+    # array of clause.
+    push: (clauses) ->
+        clauses = [clause] if typeof clauses == 'string'
+        @clauses = @clauses.concat clauses
+        this
 
     # Write to a `stream`. It does not end the stream.
     saveToStream: (stream) ->
@@ -168,5 +150,11 @@ class NinjaBuilder
             file.on 'close', -> callback()
         file.end()
 
-module.exports = (version, builddir) ->
-    new NinjaBuilder(version, builddir)
+exports.edge = (targets) ->
+    new NinjaEdge(targets)
+
+exports.rule = (name) ->
+    new NinjaRule(name)
+
+exports.file = (version, builddir) ->
+    new NinjaFile(version, builddir)

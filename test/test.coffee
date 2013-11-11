@@ -1,42 +1,42 @@
 assert = require 'assert'
-ninjaBuildGen = require '../lib/ninja-build-gen'
+ninja = require '../lib/ninja-build-gen'
 fs = require 'fs'
 
-compareToString = (ninja, targetStr) ->
+compareToString = (ninjaFile, targetStr) ->
     str = ''
     buffer =
         write: (value) ->
             str += value
-    ninja.saveToStream buffer
+    ninjaFile.saveToStream buffer
     assert.equal str, targetStr
 
 describe 'ninja', ->
-    ninja = null
+    ninjaFile = null
     beforeEach ->
-        ninja = ninjaBuildGen()
+        ninjaFile = ninja.file()
 
     describe '#rule', ->
         it 'should specify the command line', ->
-            ninja.rule('coffee').run('coffee -cs < $in > $out')
-            compareToString ninja,
+            ninjaFile.push ninja.rule('coffee').run('coffee -cs < $in > $out')
+            compareToString ninjaFile,
                 """
                 rule coffee
                   command = coffee -cs < $in > $out\n
                 """
 
         it 'should create a description', ->
-            ninja.rule('coffee')
-                .description('Compile coffee file: $in')
-            compareToString ninja,
+            ninjaFile.push ninja.rule('coffee')
+                                .description('Compile coffee file: $in')
+            compareToString ninjaFile,
                 """
                 rule coffee
                   command = \n  description = Compile coffee file: $in\n
                 """
 
         it 'should create a depfile binding', ->
-            ninja.rule('coffee')
-                .depfile('$out.d')
-            compareToString ninja,
+            ninjaFile.push ninja.rule('coffee')
+                                .depfile('$out.d')
+            compareToString ninjaFile,
                 """
                 rule coffee
                   command = \n  depfile = $out.d
@@ -45,8 +45,8 @@ describe 'ninja', ->
 
     describe '#edge', ->
         it 'should create a simple phony edge', ->
-            ninja.edge('simple_phony')
-            compareToString ninja, 'build simple_phony: phony\n'
+            ninjaFile.add ninja.edge('simple_phony')
+            compareToString ninjaFile, 'build simple_phony: phony\n'
         it 'should create a multi-target phony edge', ->
             ninja.edge(['phony1', 'phony2'])
             compareToString ninja, 'build phony1 phony2: phony\n'

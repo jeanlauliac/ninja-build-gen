@@ -1,6 +1,6 @@
 {
   "name": "ninja-build-gen",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Programmatically create Ninja build-system files.",
   "keywords": [
     "ninja",
@@ -32,7 +32,8 @@
     "prepublish": "grunt"
   },
   "dependencies": {
-    "source-map-support": "~0.1.8"
+    "source-map-support": "~0.1.8",
+    "lodash": "2.0.0"
   },
   "devDependencies": {
     "coffeelint": "~0.5.6",
