@@ -104,7 +104,7 @@ describe 'ninja', ->
             compareToString ninja, 'some_var = 42\n'
 
     describe '#save', ->
-        it 'should properly save to file', ->
+        it 'should properly save to file', (cb) ->
             ninja.assign 'some_var', 42
             filePath = "#{__dirname}/test.ninja"
             ninja.save filePath, ->
@@ -113,8 +113,8 @@ describe 'ninja', ->
                     """
                     some_var = 42\n
                     """
+                cb()
         it 'should save to file without callback', ->
-                    ninja.assign 'some_var', 42
-                    filePath = "#{__dirname}/test.ninja"
-                    ninja.save filePath
-
+            ninja.assign 'some_var', 42
+            filePath = "#{__dirname}/test.ninja"
+            ninja.save filePath
