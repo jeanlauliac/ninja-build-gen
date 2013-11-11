@@ -114,7 +114,7 @@ describe 'ninja', ->
                     some_var = 42\n
                     """
         it 'should save to file without callback', ->
-                    ninja.assign 'some_var', 42
-                    filePath = "#{__dirname}/test.ninja"
-                    ninja.save filePath
+            ninja.assign 'some_var', 42
+            filePath = "#{__dirname}/test2.ninja"
+            ninja.save filePath
 
