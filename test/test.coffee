@@ -43,6 +43,24 @@ describe 'ninja', ->
                   deps = gcc\n
                 """
 
+        it 'should enable restat', ->
+            ninja.rule('coffee')
+                .restat(true)
+            compareToString ninja,
+                """
+                rule coffee
+                  command = \n  restat = 1\n
+                """
+
+        it 'should label as generator', ->
+            ninja.rule('coffee')
+                .generator(true)
+            compareToString ninja,
+                """
+                rule coffee
+                  command = \n  generator = 1\n
+                """
+
     describe '#edge', ->
         it 'should create a simple phony edge', ->
             ninja.edge('simple_phony')
