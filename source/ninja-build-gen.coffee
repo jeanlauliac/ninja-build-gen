@@ -101,10 +101,20 @@ class NinjaRuleBuilder
         @dependencyFile = file
         this
 
+    restat: (doRestat) ->
+        @doRestat = doRestat
+        this
+
+    generator: (isGenerator) ->
+        @isGenerator = isGenerator
+        this
+
     # Write the rule into a `stream`.
     write: (stream) ->
         stream.write "rule #{@name}\n  command = #{@command}\n"
         stream.write "  description = #{@desc}\n" if @desc?
+        stream.write "  restat = 1\n" if @doRestat
+        stream.write "  generator = 1\n" if @isGenerator
         if @dependencyFile?
             stream.write "  depfile = #{@dependencyFile}\n"
             stream.write "  deps = gcc\n"
