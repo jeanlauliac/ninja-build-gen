@@ -17,7 +17,7 @@
     "url": "https://raw.github.com/jeanlauliac/ninja-build-gen/master/LICENSE"
   },
   "author": "Jean Lauliac <jean@lauliac.com>",
-  "contributors": ["Tylor Reynolds"]
+  "contributors": ["Tylor Reynolds"],
   "files": ["lib"],
   "main": "lib/ninja-build-gen.js",
   "repository": {
