@@ -1,7 +1,7 @@
 {
   "name": "ninja-build-gen",
-  "version": "0.1.1",
-  "description": "Programmatically create Ninja build-system files.",
+  "version": "0.1.2",
+  "description": "Programmatically create Ninja build-system files",
   "keywords": [
     "ninja",
     "build",
@@ -10,23 +10,19 @@
     "generate",
     "build.ninja"
   ],
-  "homepage": "https://github.com/undashes/ninja-build-gen",
-  "bugs": "https://github.com/undashes/ninja-build-gen/issues",
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://raw.github.com/undashes/ninja-build-gen/master/LICENSE"
-    }
-  ],
-  "author": {
-    "name": "Jean Lauliac",
-    "email": "jean@lauliac.com"
+  "homepage": "https://github.com/jeanlauliac/ninja-build-gen",
+  "bugs": "https://github.com/jeanlauliac/ninja-build-gen/issues",
+  "license": {
+    "type": "MIT",
+    "url": "https://raw.github.com/jeanlauliac/ninja-build-gen/master/LICENSE"
   },
+  "author": "Jean Lauliac <jean@lauliac.com>",
+  "contributors": ["Tylor Reynolds"]
   "files": ["lib"],
   "main": "lib/ninja-build-gen.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/undashes/ninja-build-gen.git"
+    "url": "git://github.com/jeanlauliac/ninja-build-gen.git"
   },
   "scripts": {
     "prepublish": "grunt"
