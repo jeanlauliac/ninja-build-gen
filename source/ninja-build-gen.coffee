@@ -65,6 +65,7 @@ class NinjaEdgeBuilder
     # Bind a variable to a temporary value for the edge.
     assign: (name, value) ->
         @assigns[name] = value
+        this
 
     # Write the edge into a `stream`.
     write: (stream) ->

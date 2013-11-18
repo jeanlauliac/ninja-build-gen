@@ -101,6 +101,9 @@ for (var i = 0; i < files.length; ++i) {
 
 ## API
 
+Calls can generally be chained, on `<ninja>`, `<rule>` and `<edge>`. For
+example: `ninja.edge('foo.o').from('foo.c').need('foo.h').using('cc')`.
+
 ##### `ninjaBuildGen([version], [builddir])`
 
 Create a `<ninja>` manifest. `version` specifies the Ninja version required
