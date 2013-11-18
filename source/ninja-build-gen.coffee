@@ -6,6 +6,13 @@
 require('source-map-support').install()
 fs          = require 'fs'
 
+# Escape a string, like a path, to be suitable for Ninja.
+# This is to be called explicitely because the user may want to use
+# variables like `$foo` in paths, rules, etc.
+escape = (s) ->
+    s.replace /[ :$]/g, (match) ->
+        '$' + match
+
 # Represent a Ninja variable assignation (it's more a binding, actually).
 class NinjaAssignBuilder
     constructor: (@name, @value) ->
@@ -181,3 +188,5 @@ class NinjaBuilder
 
 module.exports = (version, builddir) ->
     new NinjaBuilder(version, builddir)
+
+module.exports.escape = escape

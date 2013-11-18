@@ -15,6 +15,11 @@ describe 'ninja', ->
     beforeEach ->
         ninja = ninjaBuildGen()
 
+    describe 'escape', ->
+        it 'should escape proper characters', ->
+            assert.equal ninjaBuildGen.escape('foo:bar$glo fiz.js'),
+                         'foo$:bar$$glo$ fiz.js'
+
     describe '#rule', ->
         it 'should specify the command line', ->
             ninja.rule('coffee').run('coffee -cs < $in > $out')

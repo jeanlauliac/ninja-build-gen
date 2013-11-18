@@ -111,6 +111,27 @@ in the manifest, `builddir` is the building folder where Ninja will put
 temporary files. You can refer to it using `$builddir` in Ninja
 clauses.
 
+##### `ninjaBuildGen.escape(string)`
+
+Escape the `string` to be suitable in a Ninja file. See the
+[Ninja lexical syntax](http://martine.github.io/ninja/manual.html#_lexical_syntax)
+for more information on escaping. It escapes characters `$`, `:`, and spaces.
+You can use this function to process a list of path when you know you don't
+need to access variables. Eg:
+
+```js
+var paths = ['foo.js', 'bar.js', 'glo.js'];
+ninja.edge('concat.js').from(paths.map(ninjaBuildGen.escape)).using('concat');
+```
+
+Otherwise, you need to escape manually. The following statements are
+equivalent:
+
+```js
+ninja.edge('foo$:bar$$glo$ fiz.js');
+ninja.edge(ninjaBuildGen.escape('foo:bar$glo fiz.js'));
+```
+
 ### `<ninja>`
 
 ##### `<ninja>.header(value)`
