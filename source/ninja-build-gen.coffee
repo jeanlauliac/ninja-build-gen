@@ -134,7 +134,9 @@ class NinjaBuilder
     # build directory (where Ninja put logs and where you can put
     # intermediary products).
     constructor: (@version, @buildDir) ->
-        @clauses = []
+        @edges = []
+        @rules = []
+        @variables = []
         @edgeCount = 0
         @ruleCount = 0
 
@@ -151,20 +153,20 @@ class NinjaBuilder
     # Add a variable assignation into `name` from the `value`.
     assign: (name, value) ->
         clause = new NinjaAssignBuilder(name, value)
-        @clauses.push clause
+        @variables.push clause
         clause
 
     # Add a rule and return it.
     rule: (name) ->
         clause = new NinjaRuleBuilder(name)
-        @clauses.push clause
+        @rules.push clause
         @ruleCount++
         clause
 
     # Add an edge and return it.
     edge: (targets) ->
         clause = new NinjaEdgeBuilder(targets)
-        @clauses.push clause
+        @edges.push clause
         @edgeCount++
         clause
 
@@ -173,7 +175,7 @@ class NinjaBuilder
         stream.write @headerValue + '\n\n' if @headerValue?
         stream.write "ninja_required_version = #{@version}\n" if @version?
         stream.write "builddir=#{@buildDir}\n" if @buildDir?
-        for clause in @clauses
+        for clause in [].concat(@rules, @edges, @variables)
             clause.write stream
         stream.write "default #{@defaultRule}\n" if @defaultRule?
 
