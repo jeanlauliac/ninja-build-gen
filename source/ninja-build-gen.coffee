@@ -74,6 +74,11 @@ class NinjaEdgeBuilder
         @assigns[name] = value
         this
 
+
+    pool: (pool) ->
+        @_pool = pool
+        this
+
     # Write the edge into a `stream`.
     write: (stream) ->
         stream.write "build #{@targets.join(' ')}: #{@rule}"
@@ -85,6 +90,7 @@ class NinjaEdgeBuilder
         for name, value of @assigns
             stream.write "\n  #{name} = #{value}"
         stream.write '\n'
+        stream.write "  pool = #{@_pool}\n" if @_pool?
 
 # Represent a Ninja rule, that is, a method to "how I build a file of type A
 # to type B".
@@ -117,12 +123,17 @@ class NinjaRuleBuilder
         @isGenerator = isGenerator
         this
 
+    pool: (pool) ->
+        @_pool = pool
+        this
+
     # Write the rule into a `stream`.
     write: (stream) ->
         stream.write "rule #{@name}\n  command = #{@command}\n"
         stream.write "  description = #{@desc}\n" if @desc?
         stream.write "  restat = 1\n" if @doRestat
         stream.write "  generator = 1\n" if @isGenerator
+        stream.write "  pool = #{@_pool}\n" if @_pool?
         if @dependencyFile?
             stream.write "  depfile = #{@dependencyFile}\n"
             stream.write "  deps = gcc\n"
