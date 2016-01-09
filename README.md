@@ -230,6 +230,11 @@ for the rule.
 Specify an `Array` or a `String` being the paths of order-only dependencies for
 the edge.
 
+##### `<edge>.pool(poolName)`
+
+Specify a pool for this edges as a `String`. As you can't creat pools yet this
+is only really useful for specifying the 'console' pool. See the [pool documentation](https://ninja-build.org/manual.html#ref_pool).
+
 ##### `<edge>.assign(name, value)`
 
 Add a variable assignation local to the edge.

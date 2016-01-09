@@ -74,7 +74,8 @@ class NinjaEdgeBuilder
         @assigns[name] = value
         this
 
-
+    # Assign this edge to a pool.
+    # See https://ninja-build.org/manual.html#ref_pool
     pool: (pool) ->
         @_pool = pool
         this
