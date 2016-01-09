@@ -5,6 +5,4 @@
 /.editorconfig
 /.npmignore
 /Gruntfile.coffee
-/LICENSE
-/README.md
 /npm-debug.log
