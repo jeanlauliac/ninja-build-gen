@@ -162,13 +162,13 @@ edge is a `String` or an `Array` of it specifying the files that will
 result from the compilation of the edge. Each `String` is a path, that can
 be absolute, or relative to the location of the manifest (recommended).
 
-##### `<ninja>.edges
+##### `<ninja>.edges`
 An `Array` of all the edges added.
 
-##### `<ninja>.rules
+##### `<ninja>.rules`
 An `Array` of all the rules added.
 
-##### `<ninja>.variables
+##### `<ninja>.variables`
 An `Array` of all the global variables assigned.
 
 ##### `<ninja>.save(path, [callback])`
