@@ -147,7 +147,7 @@ be only one default edge.
 
 ##### `<ninja>.assign(name, value)`
 
-Add a variable assignation in the manifest. The order is important, you
+Add a global variable assignation in the manifest. The order is important, you
 shall call this before adding a rule or edge referencing the variable.
 
 ##### `<ninja>.rule(name)`
@@ -161,6 +161,15 @@ Create an `<edge>`, add it to the manifest, and return it. The `targets` of the
 edge is a `String` or an `Array` of it specifying the files that will
 result from the compilation of the edge. Each `String` is a path, that can
 be absolute, or relative to the location of the manifest (recommended).
+
+##### `<ninja>.edges
+An `Array` of all the edges added.
+
+##### `<ninja>.rules
+An `Array` of all the rules added.
+
+##### `<ninja>.variables
+An `Array` of all the global variables assigned.
 
 ##### `<ninja>.save(path, [callback])`
 
@@ -212,7 +221,7 @@ instead.
 
 ##### `<edge>.using(rule)`
 
-Specify the `rule` used to build the edge.
+Specify the `rule` (a `String`) used to build the edge.
 
 ##### `<edge>.from(sources)`
 
