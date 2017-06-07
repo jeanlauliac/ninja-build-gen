@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+- '0.10'
+- '4'
+- '6'
+- node
+script:
+  - npm run prepublish
+  # make sure there are no changes from running the build scripts
+  - git diff HEAD --quiet
