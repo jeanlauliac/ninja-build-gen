@@ -1,7 +1,7 @@
 # ninja-build-gen
 [![Build Status](https://travis-ci.org/jeanlauliac/ninja-build-gen.svg?branch=master)](https://travis-ci.org/jeanlauliac/ninja-build-gen)
 
-Create [Ninja](http://martine.github.io/ninja/) build-system manifests from
+Create [Ninja](https://ninja-build.org/) build-system manifests from
 JavaScript. This can be used for build in any kind of project, though (Ruby,
 Python, or even C++, why not...).
 
